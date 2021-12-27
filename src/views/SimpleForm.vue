@@ -1,7 +1,7 @@
 <template>
   <div>
     <h1>Create an event</h1>
-    <form>
+    <form @submit.prevent="sendForm">
 
       <BaseSelect
         :options="categories"
@@ -61,6 +61,8 @@
 </template>
 
 <script>
+import axios from 'axios'
+
 export default {
   data () {
     return {
@@ -88,6 +90,20 @@ export default {
         { label: 'Yes', value: 1 },
         { label: 'No', value: 0 }
       ]
+    }
+  },
+  methods: {
+    sendForm () {
+      axios.post(
+        'https://my-json-server.typicode.com/junpeko5/my-json-server/events',
+        this.event
+      )
+        .then(response => {
+          console.log('Response', response)
+        })
+        .catch(err => {
+          console.log('Error', err)
+        })
     }
   }
 }
